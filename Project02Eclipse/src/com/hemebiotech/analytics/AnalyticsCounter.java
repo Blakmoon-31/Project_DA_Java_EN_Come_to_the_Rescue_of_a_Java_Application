@@ -1,42 +1,40 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0; // initialize to 0
-	private static int rashCount = 0; // initialize to 0
-	private static int pupilCount = 0; // initialize to 0
 
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader(new FileReader("./Project02Eclipse/symptoms.txt"));
-		String line = reader.readLine();
+	public static void main(String[] args) {
 
-		while (line != null) {
+		createResultFile();
 
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headacheCount++;
-				System.out.println("number of headaches: " + headacheCount);
-			} else if (line.equals("rash")) {
-				rashCount++;
-			} else if (line.contains("pupils")) {
-				pupilCount++;
-			}
+	}
 
-			line = reader.readLine(); // get another symptom
+	/**
+	 * Calls methods to read the symptoms.txt file and generate the file result.out
+	 * with the list of symptoms in alphabetical order with number of occurences.
+	 * 
+	 * @see ReadSymptomDataFromFile#getSymptoms()
+	 * @see WriteResultFileFromSymptomList#writeResult(Map)
+	 * 
+	 */
+	public static void createResultFile() {
+
+		Map<String, Integer> symptomsList = new HashMap<String, Integer>();
+
+		ReadSymptomDataFromFile list = new ReadSymptomDataFromFile();
+
+		symptomsList = list.getSymptoms();
+
+		/**
+		 * Result file created only if the list given has at least one line.
+		 */
+		if (symptomsList.size() > 0) {
+			WriteResultFileFromSymptomList listWriter = new WriteResultFileFromSymptomList();
+			listWriter.writeResult(symptomsList);
+
 		}
-
-		reader.close();
-
-		// next generate output
-		FileWriter writer = new FileWriter("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
 
 	}
 }
