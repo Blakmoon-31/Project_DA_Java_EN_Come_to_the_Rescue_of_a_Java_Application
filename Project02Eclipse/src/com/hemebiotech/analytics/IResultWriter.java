@@ -4,7 +4,7 @@ import java.util.Map;
 
 /**
  * Will write result of reading symptoms into a file. Result is a list of
- * strings and values.
+ * strings and values ordered alphabetically.
  * 
  * @author Emmanuel
  *

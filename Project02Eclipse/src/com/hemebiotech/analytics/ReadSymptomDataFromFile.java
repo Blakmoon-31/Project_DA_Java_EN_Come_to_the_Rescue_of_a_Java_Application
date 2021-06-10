@@ -4,12 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Reads a file with a list of symptoms to creat a list (map) with the number of
- * occurences of each symptom.
+ * Reads a file to create a list with all symptoms from the file.
  * 
  * @author Emmanuel
  *
@@ -21,7 +20,7 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	 * 
 	 * The file name may later be used as an argument for the getSymptoms method.
 	 */
-	private String symptomFilePath = "symptoms.txt";
+	private String symptomFilePath = "./Project02Eclipse/symptoms.txt";
 
 	/**
 	 * Constructor with file name.
@@ -37,15 +36,15 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	}
 
 	/**
-	 * Lists the symptoms from the file and counts its iterations in the file.
+	 * Create a list of symptoms by reading the file.
 	 * 
-	 * @return The list of symptoms with the number of occurences.
+	 * @return The list of all symptoms.
 	 * 
 	 */
 	@Override
-	public Map<String, Integer> getSymptoms() {
+	public List<String> getSymptoms() {
 
-		Map<String, Integer> result = new HashMap<String, Integer>();
+		List<String> result = new ArrayList<String>();
 
 		/**
 		 * Controls if there is a correct file name to read.
@@ -55,32 +54,23 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 				String line = reader.readLine();
 
 				/**
-				 * If file is not empty, reads it, if empty shows warning.
+				 * If file is not empty, reads it and inserts strings in the list, if empty
+				 * shows warning.
 				 */
 				if (line != null) {
 
 					while (line != null) {
-
-						/**
-						 * If symptom is already present, adds 1 to its value. If not, creates it with
-						 * value = 1 (first time it is read). Forced to lower case to prevent
-						 * duplicates.
-						 */
-						if (result.get(line.toLowerCase()) != null) {
-							result.put(line.toLowerCase(), result.get(line.toLowerCase()) + 1);
-						} else {
-							result.put(line.toLowerCase(), 1);
-						}
+						result.add(line);
 						line = reader.readLine();
 					}
 
 					System.out.println("Listing completed.");
 
 				} else
-					System.out.println("File " + symptomFilePath + " is empty.");
+					System.out.println("The file " + symptomFilePath + " is empty.");
 
 			} catch (FileNotFoundException e) {
-				System.out.println("File " + symptomFilePath + " doesn't exist.");
+				System.out.println("The file " + symptomFilePath + " doesn't exist.");
 
 			} catch (IOException e) {
 				e.printStackTrace();

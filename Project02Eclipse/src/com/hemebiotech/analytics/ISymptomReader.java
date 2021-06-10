@@ -1,11 +1,10 @@
 package com.hemebiotech.analytics;
 
-import java.util.Map;
+import java.util.List;
 
 /**
  * Anything that will read symptom data from a source. The important part is,
- * the return value from the operation, which is a list (map) of strings with
- * occurences as values.
+ * the return value from the operation, which is a list of strings.
  * 
  * The implementation does not need to order the list.
  * 
@@ -16,9 +15,8 @@ public interface ISymptomReader {
 	/**
 	 * If no data is available, returns an empty List.
 	 * 
-	 * @return a listing of Symptoms obtained from a data source and the number of
-	 *         occurences.
+	 * @return a listing of Symptoms obtained from a data source.
 	 * 
 	 */
-	Map<String, Integer> getSymptoms();
+	List<String> getSymptoms();
 }

@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * Writes a file with a list of symptoms in alphabetical order.
@@ -41,9 +40,10 @@ public class WriteResultFileFromSymptomList implements IResultWriter {
 	/**
 	 * Creates the result file with the list of symtpoms in alphabetical order.
 	 * 
-	 * @param ListToWrite The list of symptoms with the number of occurences.
+	 * @param ListToWrite The ordered list of symptoms with the number of
+	 *                    occurences.
 	 * 
-	 * @see ReadSymptomDataFromFile#getSymptoms()
+	 * @see AnalyticsCounter#start()
 	 * 
 	 */
 	@Override
@@ -59,11 +59,7 @@ public class WriteResultFileFromSymptomList implements IResultWriter {
 			 */
 			try (FileWriter writer = new FileWriter(resultFilePath)) {
 
-				/**
-				 * Uses TreeMap to order alphabetically the list of symptoms in the output file.
-				 */
-				Map<String, Integer> map = new TreeMap<String, Integer>(ListToWrite);
-				Set<Entry<String, Integer>> set = map.entrySet();
+				Set<Entry<String, Integer>> set = ListToWrite.entrySet();
 				Iterator<Entry<String, Integer>> it = set.iterator();
 
 				while (it.hasNext()) {
